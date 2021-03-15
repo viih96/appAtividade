@@ -8,34 +8,44 @@
   <form (ngSubmit)="onSubmit()">
     <ion-item class="ion-margin-top" lines="none">
       <ion-label position="stacked">Nome</ion-label>
-      <ion-input type="text" name="nome" id="nome" [(ngModel)]="clientes.nome"></ion-input>
+      <ion-input type="text" name="nome" id="nome" #nome="ngModel" required minlength="20"  [(ngModel)]="clientes.nome"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="nome.invalid && (nome.dirty || nome.touched)" color="danger">
+      <div *ngIf="nome?.errors.required">
+        Nome é obrigatorio.
+      </div>
+      <div *ngIf="nome?.errors.minlength">
+        Nome prescisa ter no minimo 20 caracteres.
+      </div>
     </ion-item>
 
     <ion-item class="ion-margin-top" lines="none">
       <ion-label position="stacked">Tipo</ion-label>
-      <ion-select placeholder="Selecione um..." name="nome" id="tipo" [(ngModel)]="clientes.tipo">
+      <ion-select name="tipo" id="tipo" #tipo="ngModel" required  [(ngModel)]="clientes.tipo">
+        <ion-select-option value="">Selecione um...</ion-select-option>
         <ion-select-option value="1">Pessoa física</ion-select-option>
         <ion-select-option value="2">Pessoa jurídica</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-item *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" color="danger">
+      <div *ngIf="tipo?.errors.required">
+        Tipo Obrigatório...
+      </div>
+    </ion-item>
 
-    <ion-list class="ion-margin-top" lines="none">
-      <ion-radio-group>
-        <ion-list-header>
-          <ion-label>Gênero</ion-label>
-        </ion-list-header>
-
-        <ion-item>
-          <ion-label>Masculino</ion-label>
-          <ion-radio slot="start" name="genero" id="masculino" [value]="1" [(ngModel)]="clientes.genero"></ion-radio>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Feminino</ion-label>
-          <ion-radio slot="start" name="genero" id="feminino" [value]="2" [(ngModel)]="clientes.genero"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-    </ion-list>
+    <ion-item class="ion-margin-top" lines="none">
+      <ion-label position="stacked">Gênero</ion-label>
+      <ion-select name="genero" id="genero" #genero="ngModel" required  [(ngModel)]="clientes.genero">
+        <ion-select-option value="">Selecione um...</ion-select-option>
+        <ion-select-option value="1">Masculino</ion-select-option>
+        <ion-select-option value="2">Feminino</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="genero.invalid && (genero.dirty || genero.touched)" color="danger">
+      <div *ngIf="genero?.errors.required">
+        Selecione um Gênero.
+      </div>
+    </ion-item>
 
     <ion-item class="ion-margin-top" lines="none">
       <ion-label position="stacked">Data de Nascimento</ion-label>
@@ -52,11 +62,11 @@
       <ion-label>Checkbox</ion-label>
     </ion-item>
 
-    <ion-button type="submit" value="salvar" size="default" color="primary">Salvar
+    <ion-button class="ion-margin-top" type="submit" value="salvar" size="default" color="primary">Salvar
       <ion-icon slot="icon-only" name="save-outline"></ion-icon>
     </ion-button>
 
-    <ion-button size="default"  color="medium">Sair
+    <ion-button class="ion-margin-top" size="default"  color="medium">Sair
       <ion-icon slot="icon-only" name="exit-outline"></ion-icon>
     </ion-button>
 
